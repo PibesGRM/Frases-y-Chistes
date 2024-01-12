@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+<title>Frases Motivacionales</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #quote {
+      font-size: 20px;
+      font-style: italic;
+      color: #555;
+      margin: 20px 0;
+    }
+
+    #generateButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #generateButton:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+  <h1>Frases Motivacionales</h1>
+  <p id="quote">Presiona el botón para obtener una frase motivacional.</p>
+  <button id="generateButton">Generar frase</button>
+
+  <script>
+    // Lista de frases motivacionales
+    const motivationalQuotes = [
+		"El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
+		"La única forma de hacer un gran trabajo es amar lo que haces.",
+		"No te rindas, sufre ahora y vive el resto de tu vida como un campeón.",
+		"Cree en ti mismo y estarás a medio camino.",
+		"El único lugar donde el éxito viene antes del trabajo es en el diccionario.",
+		"El futuro pertenece a quienes creen en la belleza de sus sueños.",
+		"La mejor manera de predecir el futuro es crearlo.",
+		"No importa lo lento que vayas, siempre y cuando no te detengas.",
+		"El éxito no es la clave de la felicidad. La felicidad es la clave del éxito.",
+		"La motivación te impulsa a comenzar, el hábito te mantiene en movimiento.",
+		// Agregar 50 frases más aquí
+		"La actitud es una pequeña cosa que marca una gran diferencia.",
+		"Haz lo que puedas, con lo que tengas, donde estés.",
+		"Cada día es una nueva oportunidad para cambiar tu vida.",
+		"A veces, las cosas buenas toman tiempo.",
+		"Cree en tus sueños y ellos se harán realidad.",
+		"No importa cuántas veces caigas, lo importante es cuántas veces te levantas.",
+		"La disciplina es el puente entre metas y logros.",
+		"Aprende del pasado, vive el presente y crea tu futuro.",
+		"El fracaso es la clave para el éxito; cada error nos enseña algo.",
+		"Sé la mejor versión de ti mismo en cada momento.",
+		"Tu tiempo es limitado, así que no lo desperdicies viviendo la vida de otra persona.",
+		"La diferencia entre lo imposible y lo posible radica en la determinación.",
+		"Las dificultades preparan a personas comunes para destinos extraordinarios.",
+		"No busques el momento perfecto, simplemente aprovecha el momento y hazlo perfecto.",
+		"No tengas miedo de renunciar a lo bueno para perseguir lo grandioso.",
+		"La perseverancia es el único camino que conduce al éxito.",
+		"Las oportunidades no ocurren, las creas tú mismo.",
+		"Todo lo que siempre has querido está al otro lado del miedo.",
+		"El éxito no es para los que piensan en grande, sino para los que actúan en grande.",
+		"No te compares con nadie más; sé la mejor versión de ti mismo.",
+		"El que no arriesga, no gana.",
+		"Cree en ti mismo y todo será posible.",
+		"Hazlo ahora, a veces más tarde se convierte en nunca.",
+		"La vida es 10% lo que te sucede y 90% cómo reaccionas ante ello.",
+		"La motivación es lo que te pone en marcha, el hábito es lo que te mantiene.",
+		"Si no te gusta algo, cámbialo. Si no lo puedes cambiar, cambia tu actitud.",
+		"No puedes tener un mañana mejor si estás pensando en el ayer todo el tiempo.",
+		"Mantén tus sueños vivos. Entiende que a veces pueden retrasarse, pero nunca deben morir.",
+		"Nunca te rindas, porque un día puede ser justamente el día que todo cambie.",
+		"El éxito se logra con perseverancia, consistencia y determinación.",
+		"Cree en ti mismo, y el resto vendrá solo.",
+		"El poder de creer que puedes es lo que te llevará al éxito.",
+		"Lo que te detiene no es lo que no puedes hacer, sino lo que no crees que puedes hacer.",
+		"El fracaso es solo el comienzo de algo grandioso.",
+		"Cada pequeño paso te acerca un poco más a la meta.",
+		"La clave del éxito es comenzar antes de estar listo.",
+		"Siempre hay algo nuevo por descubrir y aprender.",
+		"Vive el presente, planifica el futuro y olvida el pasado.",
+		"El esfuerzo que pones hoy, será la recompensa de mañana.",
+		"Haz lo que puedas, con lo que tengas, donde estés.",
+		"La determinación es el camino al éxito.",
+		"El optimismo es la fe que conduce al logro.",
+		"El único límite es el que te pones a ti mismo.",
+		"Aprovecha cada oportunidad, el tiempo no regresa.",
+		"La valentía no siempre ruge. A veces, la valentía es esa pequeña voz al final del día que dice: lo intentaré de nuevo mañana.",
+		"El éxito no se logra por accidente. Es trabajo duro, perseverancia, aprendizaje, sacrificio y, sobre todo, amor por lo que estás haciendo o aprendiendo a hacer.",
+		"El único lugar donde el éxito viene antes del trabajo es en el diccionario.",
+		"Aprovecha cada oportunidad, el tiempo no regresa.",
+		"No hay atajos para ningún lugar que valga la pena.",
+		"La actitud determina la altitud.",
+		"Si puedes soñarlo, puedes lograrlo.",
+		"No te detengas hasta estar orgulloso.",
+		"No cuentes los días, haz que los días cuenten.",
+		"El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
+		"La perseverancia es la clave del éxito.",
+		"La vida es lo que pasa mientras estás ocupado haciendo otros planes.",
+		"El único modo de hacer un gran trabajo es amar lo que haces.",
+		"No importa lo lento que vayas, siempre y cuando no te detengas.",
+		"La mejor venganza es un éxito aplastante.",
+		"Cree en ti mismo y todo será posible.",
+		"La diferencia entre lo imposible y lo posible radica en la determinación de una persona.",
+		"No esperes a que las condiciones sean perfectas para actuar.",
+		"El éxito no es la clave de la felicidad. La felicidad es la clave del éxito. Si amas lo que estás haciendo, serás exitoso.",
+		"La vida es un 10% lo que nos sucede y un 90% cómo reaccionamos ante ello.",
+		"El camino hacia el éxito siempre está en construcción.",
+		"La disciplina es el puente entre metas y logros.",
+		"El fracaso es solo la oportunidad de empezar de nuevo, esta vez de forma más inteligente.",
+		"La confianza en ti mismo es el primer paso hacia el éxito.",
+		"El secreto para llegar lejos es empezar.",
+		"El éxito es la mejor venganza contra aquellos que desean verte fallar.",
+		"Las oportunidades no ocurren, las creas.",
+		"El éxito es como subir escaleras, paso a paso, sin atajos.",
+		"La motivación te consigue empezando. El hábito te mantiene avanzando.",
+		"Si no te gusta algo, cámbialo. Si no puedes cambiarlo, cambia tu actitud.",
+		"La excelencia no es un acto, es un hábito.",
+		"La vida es demasiado corta para gastarla soñando, ¡hazlo realidad!",
+		"Nuestro mayor miedo no es que somos inadecuados. Nuestro mayor miedo es que somos poderosos más allá de toda medida.",
+		"La mente es todo. Lo que piensas, te conviertes.",
+		"La paciencia es amarga, pero su fruto es dulce.",
+		"La suerte es el resultado del esfuerzo constante.",
+		"La vida es como una bicicleta, para mantener el equilibrio, debes seguir adelante.",
+		"Nunca es demasiado tarde para ser quien podrías haber sido.",
+		"La motivación es lo que te pone en marcha. El hábito es lo que te mantiene en marcha.",
+		"El éxito no es definitivo, el fracaso no es fatal: lo que cuenta es el valor de seguir adelante.",
+		"El cambio es inevitable. El progreso es opcional.",
+		"La verdadera medida del éxito es cuántas veces puedes rebotar después de haber tocado fondo.",
+		"La mayor gloria en la vida no es nunca caer, sino levantarse cada vez que caes.",
+		"El éxito es la suma de pequeños esfuerzos, repetidos día tras día.",
+		"El éxito es el resultado de la perfección, trabajo duro, aprendizaje de los fracasos, lealtad y persistencia.",
+		"Nuestro destino no está determinado por el número de veces que caemos, sino por el número de veces que nos levantamos.",
+		"La mayor aventura que puedes emprender es vivir la vida de tus sueños.",
+		"La vida es como una bicicleta, para mantener el equilibrio, debes seguir adelante.",
+		"No cuentes los días, haz que los días cuenten.",
+		"El éxito no es el final, el fracaso no es fatal: es el valor de seguir adelante lo que cuenta.",
+		"La vida es demasiado corta para gastarla soñando, ¡hazlo realidad!",
+		"La actitud determina la altitud.",
+		"La motivación te consigue empezando. El hábito te mantiene avanzando.",
+		"El éxito no es definitivo, el fracaso no es fatal: lo que cuenta es el valor de seguir adelante.",
+		"La paciencia es amarga, pero su fruto es dulce.",
+		"Nuestro destino no está determinado por el número de veces que caemos, sino por el número de veces que nos levantamos.",
+		"La vida es un lienzo en blanco, ¡pinta tu propia historia!",
+		"La determinación es la clave que abre la puerta del éxito.",
+		"No importa cuántas veces caigas, lo importante es levantarte una vez más.",
+		"Cada nuevo día es una oportunidad para cambiar tu vida.",
+		"La constancia en el esfuerzo trae consigo grandes recompensas.",
+		"La diferencia entre lo posible y lo imposible reside en tu determinación.",
+		"No mires atrás, estás en el camino hacia el futuro.",
+		"La confianza en ti mismo te llevará más lejos de lo que imaginas.",
+		"El éxito no es el final, el fracaso no es fatal: el coraje para continuar es lo que cuenta.",
+		"Sé la razón por la cual alguien sonríe hoy.",
+		"La paciencia es el camino hacia muchas victorias.",
+		"No te detengas hasta estar orgulloso de ti mismo.",
+		"Enfrenta tus miedos y conquista tus sueños.",
+		"La actitud positiva puede cambiar tu vida en un instante.",
+		"No esperes a que llegue el momento, haz que cada momento cuente.",
+		"La perseverancia es la madre del éxito.",
+		"Las oportunidades no ocurren, las creas.",
+		"Confía en el proceso, confía en ti mismo.",
+		"La disciplina te lleva a la grandeza.",
+		"El cambio es la única constante en la vida, adáptate y crece con él.",
+		"Sueña en grande, trabaja duro y hazlo realidad.",
+		"La verdadera fuerza radica en la voluntad de seguir adelante.",
+		"La excelencia no es un acto, sino un hábito.",
+		"Nunca es demasiado tarde para ser la mejor versión de ti mismo.",
+		"El progreso no es en línea recta, pero siempre sigue adelante.",
+		"El éxito no es un destino, es un viaje continuo.",
+		"La confianza es la clave que abre todas las puertas.",
+		"La creatividad es la inteligencia divirtiéndose.",
+		"La determinación es el primer paso hacia el logro.",
+		"La única forma de hacer un gran trabajo es amar lo que haces.",
+		"No midas tu éxito por la cantidad de dinero que tienes, mídelo por la felicidad que sientes.",
+		"La vida no es cuestión de encontrarse a uno mismo, sino de crearse a uno mismo.",
+		"La mejor manera de predecir tu futuro es crearlo.",
+		"La motivación te impulsa a empezar, el hábito te mantiene firme en el camino.",
+		"No busques el éxito, busca ser valioso. El éxito lo seguirá automáticamente.",
+		"La clave para llegar lejos es comenzar.",
+		"Si te caes siete veces, levántate ocho.",
+		"La vida no se trata de encontrarse a uno mismo, sino de crearse a uno mismo.",
+		"El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
+		"Las oportunidades no tienen un tiempo límite, aprovecha cada una que se presente.",
+		"La suerte es el resultado del esfuerzo constante.",
+		"La vida es una combinación de magia y pasta de modelar.",
+		"Si crees que puedes, estás a medio camino.",
+		"El fracaso no es el final, es una oportunidad para empezar de nuevo, con más inteligencia.",
+		"La felicidad no es la ausencia de problemas, sino la habilidad de lidiar con ellos.",
+		"La diferencia entre lo imposible y lo posible radica en la determinación de una persona.",
+		"El éxito es como subir un montón de escalones. Un paso a la vez, pero siempre hacia arriba.",
+		"Nunca subestimes el poder de tus sueños e influencia en el mundo.",
+		"El éxito no es el resultado de un solo golpe, sino de muchos pequeños golpes unidos.",
+		"La vida es corta, sonríe mientras aún tienes dientes.",
+		"El propósito de la vida es una vida de propósito.",
+		"La mejor manera de predecir el futuro es crearlo.",
+		"La vida no se trata de encontrarse a uno mismo, sino de crearse a uno mismo.",
+		"La única forma de hacer un gran trabajo es amar lo que haces.",
+		"La confianza en uno mismo es el primer secreto del éxito."
+    ];
+
+    // Función para mezclar aleatoriamente el array de frases
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Mezclamos aleatoriamente las frases para evitar repeticiones seguidas
+    shuffleArray(motivationalQuotes);
+
+    let currentIndex = 0;
+
+    // Manejador de eventos para el botón
+    document.getElementById("generateButton").addEventListener("click", function() {
+      if (currentIndex === motivationalQuotes.length) {
+        // Si ya se mostraron todas las frases, reiniciamos el array mezclado
+        shuffleArray(motivationalQuotes);
+        currentIndex = 0;
+      }
+
+      const quote = motivationalQuotes[currentIndex];
+      document.getElementById("quote").textContent = quote;
+
+      currentIndex++;
+    });
+  </script>
+</body>
+
+</html>
+
